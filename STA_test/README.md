@@ -10,4 +10,4 @@
 
 ### If more than two groups with interval/ratio data: use **ANOVA** explained in this link: (https://www.youtube.com/watch?v=CS_BKChyPuc)
 
-### Thank you for you attention!!!!
+### Thank your for you attention!!!!
