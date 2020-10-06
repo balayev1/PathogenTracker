@@ -154,7 +154,7 @@ newd= data.frame(Gene1=c(0.5,0.4,0.6,0.2,0.3,-0.3,-0.6,-0.5,-1,0.6,-1.2,-1.4,-1.
 rownames(newd)=c("Red_1","Red_2","Red_3","Red_4","Red_5","Red_6","Red_7","Red_8","Red_9","Red_10","Red_11","Red_12","Red_13","Red_14","Red_15","Red_16","Red_17","Red_18","Red_19","Red_20","Green_1","Green_2","Green_3","Green_4","Green_5","Green_6","Green_7","Green_8","Green_9","Green_10","Green_11","Green_12","Green_13","Green_14","Green_15","Green_16","Green_17","Green_18","Green_19","Green_20","Green_21","Green_22","Green_23","Green_24","Green_25","Green_26","Green_27","Green_28","Green_29","Green_30","Green_31","Green_32","Green_33","Green_34","Green_35","Green_36","Green_37","Green_38","Green_39","Green_40","Green_41","Green_42","Green_43","Green_44","Green_45","Green_46","Green_47","Green_48","Green_49","Green_50")
 plot(newd$Gene1[1:20],newd$Gene2[1:20], main="Scatter Plot", ylab="Gene 2",xlab="Gene 1", col="red", pch=13, xlim=c(-4,4),ylim=c(-4,4))
 lines(newd$Gene1[21:70],newd$Gene2[21:70],col="green",pch=19,type="p")
-legend("topleft",legend=c("Red","Green"),col=c("red","green"), ylim=c(0,1))
+legend("topleft",legend=c("Red","Green"),col=c("red","green"))
 
 # Do the PCA, plot the variance explained by the principal components. Select $k$ such that you explain $80\%$ of the variance in your data.
 pca= prcomp(newd[,1:2],scale=TRUE)
