@@ -1373,6 +1373,61 @@ for (i in 1:length(big.pathogen.stats.list)){
 ### save the file with pathogen classification
 saveRDS(big.pathogen.stats.list, file.path(dir.patho.detect, "Pathogen.sample.info.RData"))
 
+### make barplot of samples infected and uninfected
+temp.list <- list()
+for (i in 1:length(big.pathogen.stats.list)){
+    temp.list[[i]] <- big.pathogen.stats.list[[i]]$Classification_by_cover_only
+    names(temp.list)[i] <- names(big.pathogen.stats.list)[i]
+}
+
+infection.status <- as.data.frame(do.call(cbind,temp.list))
+colnames(infection.status) <- gsub(" ", ".", actual.pathogen.names)
+rownames(infection.status) <- big.pathogen.stats.list[[1]]$Sample.ID
+
+### save infection status file
+save(infection.status, file = file.path(dir.patho.detect, "Infection.status.df.Robj"))
+
+count_list <- list()
+for (i in 1:ncol(infection.status)){
+    count_list[[i]] <- table(infection.status[,i])
+    names(count_list)[i] <- colnames(infection.status)[i]
+}
+
+counts <- data.frame(do.call(rbind, count_list))
+colnames(counts) <- c("Uninfected", "Infected")
+rownames(counts) <- names(count_list)
+counts$Infected[counts$Uninfected == 183] = 0
+
+counts$Species.ID <- rownames(counts)
+counts <- melt(counts, id.vars="Species.ID")
+counts$value[counts$variable == "Uninfected"] <- counts$value[counts$variable == "Uninfected"] * -1
+counts$Species.ID <- gsub("\\.", " ", counts$Species.ID)
+
+p1 <- ggplot(counts, aes(x = Species.ID, y = value, fill = variable)) +
+    geom_bar(position = "identity", stat="identity", colour="black") +
+    geom_text(aes(label= abs(value), hjust=ifelse(sign(value)>0, -0.4, -0.1)), vjust=0.8) +
+    scale_fill_manual(values = c("firebrick1", "blue")) +
+    labs(x = "Pathogen", y = "Count", fill = "Status") +
+    theme_classic() +
+    theme(axis.text.x=element_blank(), axis.ticks.x=element_blank()) +
+    coord_flip()
+
+png(paste(dir.final.figures, "/Infection.status.barplot.by.species.WGS.png", sep=""), res=200, unit="in", height=8, width=11)
+p1
+dev.off()
+
+### Check concordance rate of infection in DBGAP samples between RNA-Seq and WGS pipelines
+
+
+
+
+
+
+
+
+
+
+
 
 
 
