@@ -1416,7 +1416,6 @@ png(paste(dir.final.figures, "/Infection.status.barplot.by.species.WGS.png", sep
 p1
 dev.off()
 
-### Check concordance rate of infection in DBGAP samples between RNA-Seq and WGS pipelines
 
 
 
